@@ -27,9 +27,12 @@ def main():
         print(f"Data transformation failed: {str(e)}")
     
     # Step 3: Data Loading
-    print("Starting data loading...")
-    # Code to load data
-    print("Data loading completed.")
+    try:
+        # Extract and save data
+        loadObject.load_and_analyze_data()
+        print("Data loading completed.")
+    except Exception as e:
+        print(f"Data loading failed: {str(e)}")
     
     # Step 4: Model Training
     print("Starting model training...")
