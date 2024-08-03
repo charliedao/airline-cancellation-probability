@@ -1,6 +1,10 @@
 import logging
+import pickle
+
+import pandas as pd
 from etl import extract, load, transform
 from analysis import model as modelTrain, evaluate
+from vis import visualizations as vis
 
 # Configure logging
 logging.basicConfig(filename='data_pipeline.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -83,12 +87,23 @@ def main():
         logger.error(f"Data evaluation failed: {str(e)}")
 
     # Step 6: Visualization
+    model_path = 'data/outputs/model.pkl'
+    model = pickle.load(open(model_path, 'rb'))
+    # Define the path to your flight data CSV file
+    flight_data_path = 'data/outputs/csv_data.csv'
+    # Load the flight data into a DataFrame
+    flight_data = pd.read_csv(flight_data_path)
     try:
-        logger.info('Starting data visualization')
-        # Code to create visualizations
-        logger.info('Data visualization completed')
-    except Exception as e:
-        logger.error(f"Data visualization failed: {str(e)}")
+        current_weather_data = vis.load_current_weather()
+        airport_code = input("Enter the airport code: ")
+        results_df = vis.predict_cancellation_probability(model, airport_code, current_weather_data, flight_data)
+        results_df['probability_of_cancellation'] = pd.to_numeric(results_df['probability_of_cancellation'], errors='coerce')
+        vis.create_dash_dashboard(results_df, airport_code)
+        for _, row in results_df.iterrows():
+            print(f"The probability of cancellation for airline {row['carrier_name']} (carrier {row['carrier']}) is {row['probability_of_cancellation']:.2f}")
+    
+    except ValueError as e:
+        print(e)
 
     logger.info('Data pipeline execution finished')
 
