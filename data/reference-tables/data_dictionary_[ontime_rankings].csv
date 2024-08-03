@@ -1,0 +1,3 @@
+attribute_name,description,data_type,example_value,unit
+Carrier,Name of the airline carrier,String,"""Hawaiian""",-
+On-Time Arrival %,Percentage of on-time arrivals,Float,90.77,%

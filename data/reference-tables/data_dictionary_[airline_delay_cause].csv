@@ -1,0 +1,22 @@
+attribute_name,description,data_type,example_value,unit
+Year,The year of the flight data,int,2024,Year
+Month,The month of the flight data,int,4,Month
+Carrier,The carrier code for the airline,str,9E',N/A
+Carrier_Name,The full name of the airline,str,Endeavor Air Inc.',N/A
+Airport,The airport code for the destination,str,ABE',N/A
+Airport_Name,The full name and location of the airport,str,"Allentown/Bethlehem/Easton, PA: Lehigh Valley International'",N/A
+Arr_Flights,The number of arriving flights,float,86,Number
+Arr_Del15,The number of arriving flights delayed by 15 minutes or more,float,9,Number
+Carrier_Ct,The number of flights operated by the carrier,float,3.12,Number
+Weather_Ct,The count of weather-related delays,float,0,Number
+NAS_Ct,The count of delays due to National Airspace System (NAS) issues,float,2.15,Number
+Security_Ct,The count of delays due to security issues,float,0,Number
+Late_Aircraft_Ct,The count of delays due to late-arriving aircraft,float,3.73,Number
+Arr_Cancelled,The number of cancelled arrivals,float,0,Number
+Arr_Diverted,The number of diverted arrivals,float,0,Number
+Arr_Delay,The total delay time for arrivals,float,486,Minutes
+Carrier_Delay,The total delay time attributed to the carrier,float,231,Minutes
+Weather_Delay,The total delay time attributed to weather conditions,float,0,Minutes
+NAS_Delay,The total delay time attributed to NAS issues,float,64,Minutes
+Security_Delay,The total delay time attributed to security issues,float,0,Minutes
+Late_Aircraft_Delay,The total delay time attributed to late-arriving aircraft,float,191,Minutes

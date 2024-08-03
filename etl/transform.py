@@ -118,6 +118,34 @@ def save_transformed_data(csv_data, xlsx_data, directory="data/processed"):
     print(f"Transformed CSV data saved to {csv_file_path}")
     print(f"Transformed XLSX data saved to {xlsx_file_path}")
 
+# Perform Exploratory Data Analysis (EDA)
+def perform_eda(data, title="Dataset"):
+    """
+    Perform exploratory data analysis (EDA) on the given dataset.
+
+    Args:
+        data (pd.DataFrame): The dataset on which to perform EDA.
+        title (str): The title for the EDA output. Default is "Dataset".
+
+    Prints:
+        - The first few rows of the dataset.
+        - Summary statistics of the dataset.
+        - Missing values in the dataset.
+    """
+    print(f"\nEDA for {title}:\n")
+    
+    # Print the first few rows of the dataset
+    print("First few rows:")
+    print(data.head(), "\n")
+    
+    # Print summary statistics
+    print("Summary statistics:")
+    print(data.describe(include='all'), "\n")
+    
+    # Check for missing values
+    print("Missing values:")
+    print(data.isnull().sum(), "\n")
+
 # Main function to orchestrate transformation
 def transform_data():
     """
@@ -128,6 +156,7 @@ def transform_data():
     - Loads the extracted data.
     - Cleans and wrangles the data.
     - Saves the transformed data to CSV files.
+    - Performs EDA on the cleaned data.
     """
     create_processed_data_directory()
     
@@ -135,6 +164,10 @@ def transform_data():
     csv_data_cleaned, xlsx_data_cleaned = clean_and_wrangle_data(csv_data, xlsx_data)
     
     save_transformed_data(csv_data_cleaned, xlsx_data_cleaned)
+    
+    # Perform EDA on cleaned data
+    perform_eda(csv_data_cleaned, "CSV Data")
+    perform_eda(xlsx_data_cleaned, "XLSX Data")
 
 def save_weather_to_csv(data):
     """
