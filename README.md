@@ -1,25 +1,31 @@
-# inst414-final-project-charles-dao
+# Flight Schedule Optimization Project
 
-# Plan for Project Documentation and Data Management
+## Project Overview
 
-# A. Code Documentation
-# - Ensure all code is well-commented.
-# - Add docstrings to each function for clarity.
-# - Update the README.md file with the following sections:
-#   - Project Overview: Describe the business problem, data sets used, techniques employed, and expected outputs.
-#   - Setup Instructions: Include instructions for cloning the repository, setting up/activating the virtual environment, installing dependencies, and any other necessary setup.
-#   - Running the Project: Provide steps on how to execute the project.
-#   - Code Package Structure: Outline the structure of the code packages, including directories like `data/`.
+### Business Problem
+The aim is to optimize flight schedules to minimize delays and improve operational efficiency for a commercial airline. Flight delays cause inconvenience to passengers, increase operational costs, and impair the airline's reputation. Reasons for delays include weather conditions, air traffic congestion, maintenance challenges, and logistical issues. Addressing this problem is expected to increase customer satisfaction, reduce costs, and provide a competitive edge. This project is driven by a personal interest in the aviation industry and a professional goal to apply data science to real-world situations with significant impact.
 
-# B. Data Management Assets
-# - Create data dictionaries for each dataset using the provided template and save them as ‘data_dictionary_[dataset name].csv’.
-# - Upload these data dictionaries into a `reference-tables` directory within `data/`.
-# - Create reference tables (static .csv files) for data that doesn’t change often, e.g., state abbreviations, and upload them into `data/reference-tables/`.
+### Data Sets
+- **Historical Flight Data**: Downloaded from the Bureau of Transportation Statistics (BTS) website.
+- **Weather Data**: Sourced via APIs like OpenWeatherMap or NOAA.
+- **Air Traffic Data**: Available from FAA and Eurocontrol through downloadable CSV files or web scraping.
+- **Maintenance Logs**: Obtained directly from airline departments or third-party providers.
 
-# C. Part 1 Documentation Update
-# - Rename 'Final Project-Part 1_[First name Last name].docx' to 'Final Project-Part 2_[First name Last name].docx'.
-# - Refactor the text to reflect the current state of the project and update it from future tense.
-# - Add a Change Log section at the beginning of the document, including a table with ‘Change’ and ‘Reason’ columns.
-# - Include a URL to the project GitHub repo at the top of the document.
+### Techniques Employed
+- Data extraction from external sources
+- Data transformation and cleaning
+- Data loading for analysis
+- Machine learning model training and evaluation
+- Data visualization
 
-# This plan will guide the development of comprehensive project documentation and proper data management.
+### Expected Outputs
+- Cleaned and transformed data
+- Predictive model and evaluation metrics
+- Visualizations to support insights and decision-making
+
+## Setup Instructions
+
+### Clone the Repository
+```bash
+git clone https://github.com/charliedaoumd/inst414-final-project-charles-dao/tree/dev
+cd project-name

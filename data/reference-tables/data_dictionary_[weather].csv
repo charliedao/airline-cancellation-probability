@@ -1,0 +1,6 @@
+attribute_name,description,data_type,example_value,unit
+Location,Location of the weather data,String,"""MD, United States""",-
+Temperature,Temperature in degrees Celsius,Float,30.4,°C
+Conditions,Weather conditions description,String,"""Partially cloudy""",-
+Humidity,Relative humidity percentage,Float,73,%
+Wind Speed,Speed of the wind,Float,7.2,km/h
