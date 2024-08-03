@@ -13,6 +13,7 @@ def main():
     try:
         # Extract and save data
         extractionObject.extract_and_save_data()
+        weatherJson = extractionObject.get_weather()
         print("Data extraction completed.")
     except Exception as e:
         print(f"Data extraction failed: {str(e)}")
@@ -22,6 +23,7 @@ def main():
     try:
         # Extract and save data
         transformObject.transform_data()
+        transformObject.save_weather_to_csv(weatherJson)
         print("Data transformation completed.")
     except Exception as e:
         print(f"Data transformation failed: {str(e)}")

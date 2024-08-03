@@ -1,14 +1,30 @@
+import csv
 import os
 import pandas as pd
 
 # Create processed data directory if it doesn't exist
 def create_processed_data_directory(directory="data/processed"):
+    """
+    Create a directory for storing processed data if it doesn't already exist.
+
+    Args:
+        directory (str): The path of the directory to create. Default is "data/processed".
+    """
     os.makedirs(directory, exist_ok=True)
 
 # Load extracted data
 def load_extracted_data():
-    csv_data_path = "data/extracted/csv_data.csv"
-    xlsx_data_path = "data/extracted/xlsx_data_combined.csv"
+    """
+    Load extracted data from CSV and XLSX files.
+
+    Returns:
+        tuple: A tuple containing two DataFrames: the CSV data and the XLSX data.
+
+    Raises:
+        FileNotFoundError: If the CSV or XLSX file is not found at the specified paths.
+    """
+    csv_data_path = "data/outputs/csv_data.csv"
+    xlsx_data_path = "data/outputs/xlsx_data_combined.csv"
     
     # Ensure the files exist
     if not os.path.exists(csv_data_path):
@@ -23,6 +39,19 @@ def load_extracted_data():
 
 # Clean and wrangle data
 def clean_and_wrangle_data(csv_data, xlsx_data):
+    """
+    Clean and wrangle the given CSV and XLSX data.
+
+    Args:
+        csv_data (pd.DataFrame): The DataFrame containing CSV data.
+        xlsx_data (pd.DataFrame): The DataFrame containing XLSX data.
+
+    Returns:
+        tuple: A tuple containing two cleaned DataFrames: the cleaned CSV data and the cleaned XLSX data.
+    
+    Prints:
+        - Error message if any exception occurs during the cleaning and wrangling process.
+    """
     try:
         # Remove rows where any cell contains 'Unknown' in both datasets
         csv_data = csv_data[~csv_data.apply(lambda row: row.str.contains('Unknown').any(), axis=1)]
@@ -63,9 +92,19 @@ def clean_and_wrangle_data(csv_data, xlsx_data):
     except Exception as e:
         print(f"Error during data transformation: {str(e)}")
 
-
 # Save transformed data
 def save_transformed_data(csv_data, xlsx_data, directory="data/processed"):
+    """
+    Save the cleaned and wrangled data to CSV files in the specified directory.
+
+    Args:
+        csv_data (pd.DataFrame): The cleaned CSV data to save.
+        xlsx_data (pd.DataFrame): The cleaned XLSX data to save.
+        directory (str): The path of the directory where the transformed data will be saved. Default is "data/processed".
+    
+    Prints:
+        - Confirmation messages for saved files.
+    """
     # Ensure the directory exists
     create_processed_data_directory(directory)
     
@@ -81,9 +120,52 @@ def save_transformed_data(csv_data, xlsx_data, directory="data/processed"):
 
 # Main function to orchestrate transformation
 def transform_data():
+    """
+    Orchestrate the transformation process by loading, cleaning, and saving the data.
+    
+    This function:
+    - Creates the processed data directory.
+    - Loads the extracted data.
+    - Cleans and wrangles the data.
+    - Saves the transformed data to CSV files.
+    """
     create_processed_data_directory()
     
     csv_data, xlsx_data = load_extracted_data()
     csv_data_cleaned, xlsx_data_cleaned = clean_and_wrangle_data(csv_data, xlsx_data)
     
     save_transformed_data(csv_data_cleaned, xlsx_data_cleaned)
+
+def save_weather_to_csv(data):
+    """
+    Save the weather data to a CSV file in the 'data/processed' directory.
+
+    Args:
+        data (dict): The weather data to save. This dictionary should contain current weather conditions including location,
+                     temperature, conditions, humidity, and wind speed.
+    
+    The function creates the 'data/processed' directory if it doesn't exist and appends weather data to a CSV file. 
+    It writes a header only if the file does not already exist.
+    """
+    directory = "data/processed"
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+    
+    filename = os.path.join(directory, "weather_data.csv")
+    file_exists = os.path.isfile(filename)
+    
+    with open(filename, mode='a', newline='') as file:
+        writer = csv.writer(file)
+        
+        if not file_exists:
+            # Write the header
+            writer.writerow(["Location", "Temperature (°C)", "Conditions", "Humidity (%)", "Wind Speed (km/h)"])
+        
+        current_conditions = data.get('currentConditions', {})
+        writer.writerow([
+            data.get('resolvedAddress', 'N/A'),
+            current_conditions.get('temp', 'N/A'),
+            current_conditions.get('conditions', 'N/A'),
+            current_conditions.get('humidity', 'N/A'),
+            current_conditions.get('windspeed', 'N/A')
+        ])
