@@ -333,5 +333,3 @@
 2024-08-03 15:55:39,951 - INFO - Model training completed
 2024-08-03 15:55:39,951 - INFO - Starting model evaluation
 2024-08-03 15:55:39,965 - INFO - Model evaluation completed
-2024-08-03 16:03:32,098 - INFO - Data pipeline execution finished
-2024-08-03 16:03:32,228 - INFO - Data pipeline execution finished
