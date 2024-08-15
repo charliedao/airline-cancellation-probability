@@ -975,3 +975,25 @@
 2024-08-15 17:07:20,892 - INFO - Model training completed
 2024-08-15 17:07:20,892 - INFO - Starting model evaluation
 2024-08-15 17:07:20,908 - INFO - Model evaluation completed
+2024-08-15 17:07:47,238 - INFO - Started data pipeline execution
+2024-08-15 17:07:47,238 - INFO - Starting data extraction
+2024-08-15 17:07:47,763 - INFO - Data extraction completed
+2024-08-15 17:07:47,763 - INFO - Starting data transformation
+2024-08-15 17:07:47,974 - INFO - Data transformation completed
+2024-08-15 17:07:47,975 - INFO - Starting data loading
+2024-08-15 17:07:47,991 - INFO - Data loading completed
+2024-08-15 17:07:47,991 - INFO - Starting model training
+2024-08-15 17:07:48,024 - INFO - Model training completed
+2024-08-15 17:07:48,024 - INFO - Starting model evaluation
+2024-08-15 17:07:48,041 - INFO - Model evaluation completed
+2024-08-15 17:09:46,791 - INFO - Started data pipeline execution
+2024-08-15 17:09:46,791 - INFO - Starting data extraction
+2024-08-15 17:09:47,365 - INFO - Data extraction completed
+2024-08-15 17:09:47,366 - INFO - Starting data transformation
+2024-08-15 17:09:47,606 - INFO - Data transformation completed
+2024-08-15 17:09:47,606 - INFO - Starting data loading
+2024-08-15 17:09:47,660 - INFO - Data loading completed
+2024-08-15 17:09:47,660 - INFO - Starting model training
+2024-08-15 17:09:47,684 - INFO - Model training completed
+2024-08-15 17:09:47,684 - INFO - Starting model evaluation
+2024-08-15 17:09:47,700 - INFO - Model evaluation completed
