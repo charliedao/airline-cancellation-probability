@@ -1,17 +1,11 @@
 import pickle
-from venv import logger
 import pandas as pd
 import dash
 from dash import dcc, html
 import plotly.graph_objs as go
-import pandas as pd
-import dash
-import dash_core_components as dcc
-import dash_html_components as html
-import dash_table as dt
+import dash_bootstrap_components as dbc
 from dash.dependencies import Input, Output, State
-import plotly.graph_objs as go
-import pandas as pd
+import logging
 
 def predict_cancellation_probability(model, airport_code, current_weather_data, flight_data):
     """
@@ -84,10 +78,12 @@ def predict_cancellation_probability(model, airport_code, current_weather_data, 
         
         print(f"Cancellation probabilities for airlines at airport {airport_code}:")
         print(results_df)
-        
+        print("Dash is running on http://127.0.0.1:8050/")
         return results_df
     
     except Exception as e:
+        logging.basicConfig(filename='data_pipeline.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+        logger = logging.getLogger(__name__)
         logger.error(f"Prediction failed: {str(e)}")
         raise
 
@@ -116,47 +112,67 @@ def load_current_weather():
     
     return current_weather_data
 
-def create_dash_dashboard(initial_df, initial_airport_code):
+def create_dash_dashboard(initial_airport_code):
     """
-    Create and run a Dash dashboard to visualize the probability of cancellation for different airlines.
+    Create and run a Dash dashboard to visualize the probability of cancellation for different airlines and display current weather stats.
     
     Args:
-        initial_df (pd.DataFrame): Initial DataFrame containing airline cancellation probabilities with columns:
-                                   'carrier_name', 'carrier', and 'probability_of_cancellation'.
         initial_airport_code (str): Initial airport code for which the data is displayed.
     """
-    # Initialize Dash app
-    app = dash.Dash(__name__)
+    # Initialize Dash app with a Bootstrap theme for improved styling
+    app = dash.Dash(__name__, external_stylesheets=[dbc.themes.CYBORG])
 
     # Layout of the app
-    app.layout = html.Div([
-        html.H1('Airline Cancellation Probability Dashboard'),
+    app.layout = dbc.Container([
+        dbc.Row([
+            dbc.Col(html.H1('Airline Cancellation Probability Dashboard'), width=12)
+        ], justify='center', className='mb-4'),
 
         # Input field for airport code
-        html.Div([
-            dcc.Input(id='airport-code-input', value=initial_airport_code, type='text'),
-            html.Button('Submit', id='submit-button', n_clicks=0),
+        dbc.Row([
+            dbc.Col([
+                dcc.Input(id='airport-code-input', value=initial_airport_code, type='text', className='form-control'),
+            ], width=6),
+            dbc.Col([
+                html.Button('Submit', id='submit-button', n_clicks=0, className='btn btn-primary'),
+            ], width=2),
+        ], justify='center', className='mb-4'),
+
+        # Display current weather information
+        dbc.Row([
+            dbc.Col([
+                html.Div(id='weather-info', className='mb-4')
+            ], width=12)
         ]),
 
-        html.H3(id='airport-code-display', children=f"Data for Airport Code: {initial_airport_code}"),
+        # Display the airport code
+        dbc.Row([
+            dbc.Col(html.H3(id='airport-code-display', children=f"Data for Airport Code: {initial_airport_code}"), width=12)
+        ], justify='center', className='mb-4'),
 
-        dcc.Graph(id='cancellation-probability-chart')
-    ])
+        # Display the bar chart
+        dbc.Row([
+            dbc.Col(dcc.Graph(id='cancellation-probability-chart'), width=12)
+        ]),
+    ], fluid=True)
 
-    # Callback to update the data and chart when the airport code is submitted
+    # Callback to update the data, chart, and weather stats when the airport code is submitted
     @app.callback(
         [Output('cancellation-probability-chart', 'figure'),
-         Output('airport-code-display', 'children')],
+         Output('airport-code-display', 'children'),
+         Output('weather-info', 'children')],
         [Input('submit-button', 'n_clicks')],
         [State('airport-code-input', 'value')]
     )
     def update_dashboard(n_clicks, airport_code):
         model_path = 'data/outputs/model.pkl'
         model = pickle.load(open(model_path, 'rb'))
+
         # Define the path to your flight data CSV file
         flight_data_path = 'data/outputs/csv_data.csv'
         flight_data = pd.read_csv(flight_data_path)
-        # Fetch the updated data based on the new airport code
+
+        # Fetch the updated data
         current_weather_data = load_current_weather()
         results_df = predict_cancellation_probability(model, airport_code, current_weather_data, flight_data)
         results_df['probability_of_cancellation'] = pd.to_numeric(results_df['probability_of_cancellation'], errors='coerce')
@@ -169,13 +185,13 @@ def create_dash_dashboard(initial_df, initial_airport_code):
                     y=results_df['probability_of_cancellation'],
                     text=results_df['probability_of_cancellation'].apply(lambda x: f'{x:.2f}'),
                     textposition='auto',
-                    marker=dict(color='royalblue')
+                    marker=dict(color='orange')
                 )
             ],
             'layout': go.Layout(
-                title='Probability of Cancellation for Different Airlines',
+                title = "Airline Cancellation Probabilities - 1.0 Is the Max but Not 100%",
                 xaxis={'title': 'Airline'},
-                yaxis={'title': 'Probability of Cancellation'},
+                yaxis={'title': 'Probability of Cancellation 1.0 is chance of high cancellation'},
                 template='plotly_dark'
             )
         }
@@ -183,7 +199,16 @@ def create_dash_dashboard(initial_df, initial_airport_code):
         # Update the display of the airport code
         airport_code_display = f"Data for Airport Code: {airport_code}"
 
-        return figure, airport_code_display
+        # Display current weather info
+        # Assuming current_weather_data is a DataFrame
+        most_recent_weather = current_weather_data.iloc[-1]  # Select the most recent row
+
+        weather_info = html.Div([
+           html.H4("Current Weather Stats"),
+           html.H4(most_recent_weather.to_string())
+        ], className='bg-dark text-light p-3 rounded')
+
+        return figure, airport_code_display, weather_info
 
     # Run the app
     app.run_server(debug=True)
