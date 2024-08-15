@@ -997,3 +997,14 @@
 2024-08-15 17:09:47,684 - INFO - Model training completed
 2024-08-15 17:09:47,684 - INFO - Starting model evaluation
 2024-08-15 17:09:47,700 - INFO - Model evaluation completed
+2024-08-15 17:10:08,022 - INFO - Started data pipeline execution
+2024-08-15 17:10:08,022 - INFO - Starting data extraction
+2024-08-15 17:10:08,546 - INFO - Data extraction completed
+2024-08-15 17:10:08,546 - INFO - Starting data transformation
+2024-08-15 17:10:08,774 - INFO - Data transformation completed
+2024-08-15 17:10:08,774 - INFO - Starting data loading
+2024-08-15 17:10:08,831 - INFO - Data loading completed
+2024-08-15 17:10:08,831 - INFO - Starting model training
+2024-08-15 17:10:08,851 - INFO - Model training completed
+2024-08-15 17:10:08,851 - INFO - Starting model evaluation
+2024-08-15 17:10:08,868 - INFO - Model evaluation completed
