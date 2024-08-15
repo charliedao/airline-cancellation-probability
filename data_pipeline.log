@@ -344,6 +344,7 @@
 2024-08-15 14:14:20,274 - INFO - Model training completed
 2024-08-15 14:14:20,274 - INFO - Starting model evaluation
 2024-08-15 14:14:20,287 - INFO - Model evaluation completed
+2024-08-15 14:14:29,226 - INFO - Dash is running on http://127.0.0.1:8050/
 
 2024-08-15 14:14:30,262 - INFO - Started data pipeline execution
 2024-08-15 14:14:30,262 - INFO - Starting data extraction
