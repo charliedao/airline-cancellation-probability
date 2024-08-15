@@ -1,7 +1,15 @@
+import pickle
 from venv import logger
 import pandas as pd
 import dash
 from dash import dcc, html
+import plotly.graph_objs as go
+import pandas as pd
+import dash
+import dash_core_components as dcc
+import dash_html_components as html
+import dash_table as dt
+from dash.dependencies import Input, Output, State
 import plotly.graph_objs as go
 import pandas as pd
 
@@ -108,14 +116,14 @@ def load_current_weather():
     
     return current_weather_data
 
-
-def create_dash_dashboard(results_df, airport_code):
+def create_dash_dashboard(initial_df, initial_airport_code):
     """
     Create and run a Dash dashboard to visualize the probability of cancellation for different airlines.
     
     Args:
-        results_df (pd.DataFrame): DataFrame containing airline cancellation probabilities with columns:
+        initial_df (pd.DataFrame): Initial DataFrame containing airline cancellation probabilities with columns:
                                    'carrier_name', 'carrier', and 'probability_of_cancellation'.
+        initial_airport_code (str): Initial airport code for which the data is displayed.
     """
     # Initialize Dash app
     app = dash.Dash(__name__)
@@ -123,29 +131,59 @@ def create_dash_dashboard(results_df, airport_code):
     # Layout of the app
     app.layout = html.Div([
         html.H1('Airline Cancellation Probability Dashboard'),
-        html.H3(f"Data for Airport Code: {airport_code}"),
 
-        dcc.Graph(
-            id='cancellation-probability-chart',
-            figure={
-                'data': [
-                    go.Bar(
-                        x=results_df['carrier_name'],
-                        y=results_df['probability_of_cancellation'],
-                        text=results_df['probability_of_cancellation'].apply(lambda x: f'{x:.2f}'),
-                        textposition='auto',
-                        marker=dict(color='royalblue')
-                    )
-                ],
-                'layout': go.Layout(
-                    title='Probability of Cancellation for Different Airlines',
-                    xaxis={'title': 'Airline'},
-                    yaxis={'title': 'Probability of Cancellation'},
-                    template='plotly_dark'
-                )
-            }
-        )
+        # Input field for airport code
+        html.Div([
+            dcc.Input(id='airport-code-input', value=initial_airport_code, type='text'),
+            html.Button('Submit', id='submit-button', n_clicks=0),
+        ]),
+
+        html.H3(id='airport-code-display', children=f"Data for Airport Code: {initial_airport_code}"),
+
+        dcc.Graph(id='cancellation-probability-chart')
     ])
+
+    # Callback to update the data and chart when the airport code is submitted
+    @app.callback(
+        [Output('cancellation-probability-chart', 'figure'),
+         Output('airport-code-display', 'children')],
+        [Input('submit-button', 'n_clicks')],
+        [State('airport-code-input', 'value')]
+    )
+    def update_dashboard(n_clicks, airport_code):
+        model_path = 'data/outputs/model.pkl'
+        model = pickle.load(open(model_path, 'rb'))
+        # Define the path to your flight data CSV file
+        flight_data_path = 'data/outputs/csv_data.csv'
+        flight_data = pd.read_csv(flight_data_path)
+        # Fetch the updated data based on the new airport code
+        current_weather_data = load_current_weather()
+        results_df = predict_cancellation_probability(model, airport_code, current_weather_data, flight_data)
+        results_df['probability_of_cancellation'] = pd.to_numeric(results_df['probability_of_cancellation'], errors='coerce')
+
+        # Create the bar chart
+        figure = {
+            'data': [
+                go.Bar(
+                    x=results_df['carrier_name'],
+                    y=results_df['probability_of_cancellation'],
+                    text=results_df['probability_of_cancellation'].apply(lambda x: f'{x:.2f}'),
+                    textposition='auto',
+                    marker=dict(color='royalblue')
+                )
+            ],
+            'layout': go.Layout(
+                title='Probability of Cancellation for Different Airlines',
+                xaxis={'title': 'Airline'},
+                yaxis={'title': 'Probability of Cancellation'},
+                template='plotly_dark'
+            )
+        }
+
+        # Update the display of the airport code
+        airport_code_display = f"Data for Airport Code: {airport_code}"
+
+        return figure, airport_code_display
 
     # Run the app
     app.run_server(debug=True)

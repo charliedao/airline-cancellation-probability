@@ -523,15 +523,3 @@
 2024-08-15 14:33:48,404 - INFO - Starting model evaluation
 2024-08-15 14:33:48,419 - INFO - Model evaluation completed
 2024-08-15 14:34:03,594 - ERROR - Prediction failed: Airport code not found in the flight data.
-2024-08-15 14:44:28,024 - INFO - Started data pipeline execution
-2024-08-15 14:44:28,024 - INFO - Starting data extraction
-2024-08-15 14:44:28,583 - INFO - Data extraction completed
-2024-08-15 14:44:28,583 - INFO - Starting data transformation
-2024-08-15 14:44:28,830 - INFO - Data transformation completed
-2024-08-15 14:44:28,831 - INFO - Starting data loading
-2024-08-15 14:44:28,890 - INFO - Data loading completed
-2024-08-15 14:44:28,890 - INFO - Starting model training
-2024-08-15 14:44:28,912 - INFO - Model training completed
-2024-08-15 14:44:28,912 - INFO - Starting model evaluation
-2024-08-15 14:44:28,925 - INFO - Model evaluation completed
-2024-08-15 14:44:44,124 - INFO - Data pipeline execution finished
