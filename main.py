@@ -95,10 +95,9 @@ def main():
     flight_data = pd.read_csv(flight_data_path)
     try:
         current_weather_data = vis.load_current_weather()
-        airport_code = input("Enter the airport code: ")
-        results_df = vis.predict_cancellation_probability(model, airport_code, current_weather_data, flight_data)
+        results_df = vis.predict_cancellation_probability(model, 'IAD', current_weather_data, flight_data)
         results_df['probability_of_cancellation'] = pd.to_numeric(results_df['probability_of_cancellation'], errors='coerce')
-        vis.create_dash_dashboard(results_df, airport_code)
+        vis.create_dash_dashboard(results_df, 'IAD')
         for _, row in results_df.iterrows():
             print(f"The probability of cancellation for airline {row['carrier_name']} (carrier {row['carrier']}) is {row['probability_of_cancellation']:.2f}")
     
