@@ -169,6 +169,35 @@ def transform_data():
     perform_eda(csv_data_cleaned, "CSV Data")
     perform_eda(xlsx_data_cleaned, "XLSX Data")
 
+
+# Function to perform EDA without visualizations
+def perform_eda(data, title="Dataset"):
+    """
+    Perform exploratory data analysis (EDA) on the given dataset.
+
+    Args:
+        data (pd.DataFrame): The dataset on which to perform EDA.
+        title (str): The title for the EDA output. Default is "Dataset".
+
+    Prints:
+        - The first few rows of the dataset.
+        - Summary statistics of the dataset.
+        - Missing values in the dataset.
+    """
+    print(f"\nEDA for {title}:\n")
+    
+    # Print the first few rows of the dataset
+    print("First few rows:")
+    print(data.head(), "\n")
+    
+    # Print summary statistics
+    print("Summary statistics:")
+    print(data.describe(), "\n")
+    
+    # Check for missing values
+    print("Missing values:")
+    print(data.isnull().sum(), "\n")
+
 def save_weather_to_csv(data):
     """
     Save the weather data to a CSV file in the 'data/processed' directory.

@@ -84,7 +84,7 @@ def predict_cancellation_probability(model, airport_code, current_weather_data, 
         
         print(f"Cancellation probabilities for airlines at airport {airport_code}:")
         print(results_df)
-        
+        print("Dash is running on http://127.0.0.1:8050/")
         return results_df
     
     except Exception as e:
