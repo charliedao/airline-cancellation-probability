@@ -333,3 +333,193 @@
 2024-08-03 15:55:39,951 - INFO - Model training completed
 2024-08-03 15:55:39,951 - INFO - Starting model evaluation
 2024-08-03 15:55:39,965 - INFO - Model evaluation completed
+2024-08-15 14:14:19,377 - INFO - Started data pipeline execution
+2024-08-15 14:14:19,377 - INFO - Starting data extraction
+2024-08-15 14:14:19,947 - INFO - Data extraction completed
+2024-08-15 14:14:19,947 - INFO - Starting data transformation
+2024-08-15 14:14:20,187 - INFO - Data transformation completed
+2024-08-15 14:14:20,187 - INFO - Starting data loading
+2024-08-15 14:14:20,251 - INFO - Data loading completed
+2024-08-15 14:14:20,251 - INFO - Starting model training
+2024-08-15 14:14:20,274 - INFO - Model training completed
+2024-08-15 14:14:20,274 - INFO - Starting model evaluation
+2024-08-15 14:14:20,287 - INFO - Model evaluation completed
+2024-08-15 14:14:29,226 - INFO - Dash is running on http://127.0.0.1:8050/
+
+2024-08-15 14:14:30,262 - INFO - Started data pipeline execution
+2024-08-15 14:14:30,262 - INFO - Starting data extraction
+2024-08-15 14:14:31,067 - INFO - Data extraction completed
+2024-08-15 14:14:31,067 - INFO - Starting data transformation
+2024-08-15 14:14:31,315 - INFO - Data transformation completed
+2024-08-15 14:14:31,315 - INFO - Starting data loading
+2024-08-15 14:14:31,372 - INFO - Data loading completed
+2024-08-15 14:14:31,372 - INFO - Starting model training
+2024-08-15 14:14:31,393 - INFO - Model training completed
+2024-08-15 14:14:31,393 - INFO - Starting model evaluation
+2024-08-15 14:14:31,407 - INFO - Model evaluation completed
+2024-08-15 14:14:58,025 - INFO - Data pipeline execution finished
+2024-08-15 14:14:58,148 - INFO - Data pipeline execution finished
+2024-08-15 14:15:00,587 - INFO - Started data pipeline execution
+2024-08-15 14:15:00,587 - INFO - Starting data extraction
+2024-08-15 14:15:01,092 - INFO - Data extraction completed
+2024-08-15 14:15:01,092 - INFO - Starting data transformation
+2024-08-15 14:15:01,318 - INFO - Data transformation completed
+2024-08-15 14:15:01,318 - INFO - Starting data loading
+2024-08-15 14:15:01,376 - INFO - Data loading completed
+2024-08-15 14:15:01,376 - INFO - Starting model training
+2024-08-15 14:15:01,397 - INFO - Model training completed
+2024-08-15 14:15:01,397 - INFO - Starting model evaluation
+2024-08-15 14:15:01,411 - INFO - Model evaluation completed
+2024-08-15 14:15:03,112 - INFO - Dash is running on http://127.0.0.1:8050/
+
+2024-08-15 14:15:04,108 - INFO - Started data pipeline execution
+2024-08-15 14:15:04,108 - INFO - Starting data extraction
+2024-08-15 14:15:04,635 - INFO - Data extraction completed
+2024-08-15 14:15:04,635 - INFO - Starting data transformation
+2024-08-15 14:15:04,856 - INFO - Data transformation completed
+2024-08-15 14:15:04,857 - INFO - Starting data loading
+2024-08-15 14:15:04,910 - INFO - Data loading completed
+2024-08-15 14:15:04,910 - INFO - Starting model training
+2024-08-15 14:15:04,932 - INFO - Model training completed
+2024-08-15 14:15:04,932 - INFO - Starting model evaluation
+2024-08-15 14:15:04,946 - INFO - Model evaluation completed
+2024-08-15 14:18:30,702 - INFO - Started data pipeline execution
+2024-08-15 14:18:30,703 - INFO - Starting data extraction
+2024-08-15 14:18:31,251 - INFO - Data extraction completed
+2024-08-15 14:18:31,251 - INFO - Starting data transformation
+2024-08-15 14:18:31,543 - INFO - Data pipeline execution finished
+2024-08-15 14:18:33,722 - INFO - Started data pipeline execution
+2024-08-15 14:18:33,722 - INFO - Starting data extraction
+2024-08-15 14:18:34,234 - INFO - Data extraction completed
+2024-08-15 14:18:34,234 - INFO - Starting data transformation
+2024-08-15 14:18:34,456 - INFO - Data transformation completed
+2024-08-15 14:18:34,456 - INFO - Starting data loading
+2024-08-15 14:18:34,515 - INFO - Data loading completed
+2024-08-15 14:18:34,515 - INFO - Starting model training
+2024-08-15 14:18:34,536 - INFO - Model training completed
+2024-08-15 14:18:34,536 - INFO - Starting model evaluation
+2024-08-15 14:18:34,550 - INFO - Model evaluation completed
+2024-08-15 14:18:36,445 - INFO - Dash is running on http://127.0.0.1:8050/
+
+2024-08-15 14:18:37,401 - INFO - Started data pipeline execution
+2024-08-15 14:18:37,401 - INFO - Starting data extraction
+2024-08-15 14:18:37,905 - INFO - Data extraction completed
+2024-08-15 14:18:37,905 - INFO - Starting data transformation
+2024-08-15 14:18:38,137 - INFO - Data transformation completed
+2024-08-15 14:18:38,137 - INFO - Starting data loading
+2024-08-15 14:18:38,191 - INFO - Data loading completed
+2024-08-15 14:18:38,191 - INFO - Starting model training
+2024-08-15 14:18:38,213 - INFO - Model training completed
+2024-08-15 14:18:38,213 - INFO - Starting model evaluation
+2024-08-15 14:18:38,228 - INFO - Model evaluation completed
+2024-08-15 14:21:58,926 - INFO - Started data pipeline execution
+2024-08-15 14:21:58,926 - INFO - Starting data extraction
+2024-08-15 14:21:59,473 - INFO - Data extraction completed
+2024-08-15 14:21:59,473 - INFO - Starting data transformation
+2024-08-15 14:21:59,695 - INFO - Data transformation completed
+2024-08-15 14:21:59,695 - INFO - Starting data loading
+2024-08-15 14:21:59,748 - INFO - Data loading completed
+2024-08-15 14:21:59,748 - INFO - Starting model training
+2024-08-15 14:21:59,769 - INFO - Model training completed
+2024-08-15 14:21:59,769 - INFO - Starting model evaluation
+2024-08-15 14:21:59,782 - INFO - Model evaluation completed
+2024-08-15 14:23:12,156 - INFO - Data pipeline execution finished
+2024-08-15 14:23:13,799 - INFO - Started data pipeline execution
+2024-08-15 14:23:13,799 - INFO - Starting data extraction
+2024-08-15 14:23:14,395 - INFO - Data extraction completed
+2024-08-15 14:23:14,395 - INFO - Starting data transformation
+2024-08-15 14:23:14,630 - INFO - Data transformation completed
+2024-08-15 14:23:14,630 - INFO - Starting data loading
+2024-08-15 14:23:14,687 - INFO - Data loading completed
+2024-08-15 14:23:14,687 - INFO - Starting model training
+2024-08-15 14:23:14,708 - INFO - Model training completed
+2024-08-15 14:23:14,708 - INFO - Starting model evaluation
+2024-08-15 14:23:14,722 - INFO - Model evaluation completed
+2024-08-15 14:23:16,258 - INFO - Data pipeline execution finished
+2024-08-15 14:23:32,627 - INFO - Started data pipeline execution
+2024-08-15 14:23:32,627 - INFO - Starting data extraction
+2024-08-15 14:23:33,163 - INFO - Data extraction completed
+2024-08-15 14:23:33,163 - INFO - Starting data transformation
+2024-08-15 14:23:33,380 - INFO - Data transformation completed
+2024-08-15 14:23:33,380 - INFO - Starting data loading
+2024-08-15 14:23:33,437 - INFO - Data loading completed
+2024-08-15 14:23:33,437 - INFO - Starting model training
+2024-08-15 14:23:33,462 - INFO - Model training completed
+2024-08-15 14:23:33,462 - INFO - Starting model evaluation
+2024-08-15 14:23:33,477 - INFO - Model evaluation completed
+2024-08-15 14:23:34,925 - INFO - Dash is running on http://127.0.0.1:8050/
+
+2024-08-15 14:23:35,902 - INFO - Started data pipeline execution
+2024-08-15 14:23:35,902 - INFO - Starting data extraction
+2024-08-15 14:23:36,397 - INFO - Data extraction completed
+2024-08-15 14:23:36,398 - INFO - Starting data transformation
+2024-08-15 14:23:36,618 - INFO - Data transformation completed
+2024-08-15 14:23:36,618 - INFO - Starting data loading
+2024-08-15 14:23:36,678 - INFO - Data loading completed
+2024-08-15 14:23:36,678 - INFO - Starting model training
+2024-08-15 14:23:36,710 - INFO - Model training completed
+2024-08-15 14:23:36,710 - INFO - Starting model evaluation
+2024-08-15 14:23:36,724 - INFO - Model evaluation completed
+2024-08-15 14:25:53,148 - INFO - Started data pipeline execution
+2024-08-15 14:25:53,148 - INFO - Starting data extraction
+2024-08-15 14:25:53,711 - INFO - Data extraction completed
+2024-08-15 14:25:53,711 - INFO - Starting data transformation
+2024-08-15 14:25:53,932 - INFO - Data transformation completed
+2024-08-15 14:25:53,932 - INFO - Starting data loading
+2024-08-15 14:25:53,984 - INFO - Data loading completed
+2024-08-15 14:25:53,984 - INFO - Starting model training
+2024-08-15 14:25:54,006 - INFO - Model training completed
+2024-08-15 14:25:54,006 - INFO - Starting model evaluation
+2024-08-15 14:25:54,020 - INFO - Model evaluation completed
+2024-08-15 14:26:55,981 - INFO - Data pipeline execution finished
+2024-08-15 14:26:57,893 - INFO - Started data pipeline execution
+2024-08-15 14:26:57,893 - INFO - Starting data extraction
+2024-08-15 14:26:58,436 - INFO - Data extraction completed
+2024-08-15 14:26:58,436 - INFO - Starting data transformation
+2024-08-15 14:26:58,669 - INFO - Data transformation completed
+2024-08-15 14:26:58,670 - INFO - Starting data loading
+2024-08-15 14:26:58,731 - INFO - Data loading completed
+2024-08-15 14:26:58,731 - INFO - Starting model training
+2024-08-15 14:26:58,757 - INFO - Model training completed
+2024-08-15 14:26:58,757 - INFO - Starting model evaluation
+2024-08-15 14:26:58,771 - INFO - Model evaluation completed
+2024-08-15 14:27:00,099 - INFO - Dash is running on http://127.0.0.1:8050/
+
+2024-08-15 14:27:01,062 - INFO - Started data pipeline execution
+2024-08-15 14:27:01,062 - INFO - Starting data extraction
+2024-08-15 14:27:01,566 - INFO - Data extraction completed
+2024-08-15 14:27:01,566 - INFO - Starting data transformation
+2024-08-15 14:27:01,796 - INFO - Data transformation completed
+2024-08-15 14:27:01,797 - INFO - Starting data loading
+2024-08-15 14:27:01,850 - INFO - Data loading completed
+2024-08-15 14:27:01,850 - INFO - Starting model training
+2024-08-15 14:27:01,871 - INFO - Model training completed
+2024-08-15 14:27:01,871 - INFO - Starting model evaluation
+2024-08-15 14:27:01,885 - INFO - Model evaluation completed
+2024-08-15 14:32:46,845 - INFO - Data pipeline execution finished
+2024-08-15 14:32:47,001 - INFO - Data pipeline execution finished
+2024-08-15 14:33:45,729 - INFO - Started data pipeline execution
+2024-08-15 14:33:45,729 - INFO - Starting data extraction
+2024-08-15 14:33:46,262 - INFO - Data extraction completed
+2024-08-15 14:33:46,262 - INFO - Starting data transformation
+2024-08-15 14:33:46,499 - INFO - Data transformation completed
+2024-08-15 14:33:46,499 - INFO - Starting data loading
+2024-08-15 14:33:46,556 - INFO - Data loading completed
+2024-08-15 14:33:46,556 - INFO - Starting model training
+2024-08-15 14:33:46,578 - INFO - Model training completed
+2024-08-15 14:33:46,578 - INFO - Starting model evaluation
+2024-08-15 14:33:46,594 - INFO - Model evaluation completed
+2024-08-15 14:33:46,618 - INFO - Dash is running on http://127.0.0.1:8050/
+
+2024-08-15 14:33:47,611 - INFO - Started data pipeline execution
+2024-08-15 14:33:47,611 - INFO - Starting data extraction
+2024-08-15 14:33:48,107 - INFO - Data extraction completed
+2024-08-15 14:33:48,107 - INFO - Starting data transformation
+2024-08-15 14:33:48,327 - INFO - Data transformation completed
+2024-08-15 14:33:48,327 - INFO - Starting data loading
+2024-08-15 14:33:48,383 - INFO - Data loading completed
+2024-08-15 14:33:48,384 - INFO - Starting model training
+2024-08-15 14:33:48,404 - INFO - Model training completed
+2024-08-15 14:33:48,404 - INFO - Starting model evaluation
+2024-08-15 14:33:48,419 - INFO - Model evaluation completed
+2024-08-15 14:34:03,594 - ERROR - Prediction failed: Airport code not found in the flight data.
