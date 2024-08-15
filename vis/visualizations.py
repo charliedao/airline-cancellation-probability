@@ -1,171 +1,151 @@
+from venv import logger
 import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
-import plotly.express as px
 import dash
-import dash_core_components as dcc
-import dash_html_components as html
-import dash_table
-from dash import dcc, html, Dash
-import os
-import pickle
+from dash import dcc, html
+import plotly.graph_objs as go
+import pandas as pd
 
-# Ensure the directories exist
-def create_directories():
+def predict_cancellation_probability(model, airport_code, current_weather_data, flight_data):
     """
-    Create directories for saving visualizations if they do not exist.
-    """
-    if not os.path.exists("data/analyzed"):
-        os.makedirs("data/analyzed")
-
-# Load data
-def load_data():
-    """
-    Load the analyzed data from the CSV file.
+    Predict the probability of cancellation based on the airport code and current weather data.
+    
+    Args:
+        model (sklearn.pipeline.Pipeline): The trained model.
+        airport_code (str): The airport code to predict for.
+        current_weather_data (pd.DataFrame): DataFrame with current weather data.
+        flight_data (pd.DataFrame): DataFrame with historical flight data.
     
     Returns:
-        pd.DataFrame: The DataFrame containing the flight delay data.
+        pd.DataFrame: DataFrame with airlines and their cancellation probabilities.
     """
-    data_path = "data/processed/flight_data_transformed.csv"
-    return pd.read_csv(data_path)
+    try:
+        # Print out the airport column to verify available codes
+        print("Available airport codes in flight data:")
+        print(flight_data['airport'].unique())
+        
+        # Check current weather data columns
+        print("Current weather data columns:")
+        print(current_weather_data.columns)
+        
+        # Rename columns in current_weather_data if needed
+        current_weather_data.rename(columns={
+            'Temperature (°C)': 'temperature',
+            'Humidity (%)': 'humidity',
+            'Wind Speed (km/h)': 'wind_speed'
+        }, inplace=True)
+        
+        # Filter flight data for the given airport code
+        flight_info = flight_data[flight_data['airport'] == airport_code]
+        
+        if flight_info.empty:
+            raise ValueError("Airport code not found in the flight data.")
+        
+        # Use the first row of current weather data (since all rows are the same)
+        weather_info = current_weather_data.iloc[0]
+        
+        # Prepare the feature vector for prediction
+        features = ['arr_flights', 'arr_del15', 'carrier_ct', 'weather_ct', 'nas_ct', 'security_ct', 'late_aircraft_ct',
+                    'arr_delay', 'carrier_delay', 'weather_delay', 'nas_delay', 'security_delay', 'late_aircraft_delay',
+                    'temperature', 'humidity', 'wind_speed']
+        
+        # Create an empty list to store results
+        results = []
+        
+        for _, row in flight_info.iterrows():
+            # Extract flight-related features
+            flight_features = row[features[:-3]].values.tolist()
+            
+            # Extract current weather features
+            weather_features = weather_info[['temperature', 'humidity', 'wind_speed']].values.tolist()
+            
+            # Combine flight and weather features
+            feature_vector = flight_features + weather_features
+            
+            # Predict the probability
+            probability = model.predict_proba([feature_vector])[0][1]
+            
+            # Append the result with airline info and probability
+            results.append({
+                'carrier': row['carrier'],
+                'carrier_name': row['carrier_name'],
+                'probability_of_cancellation': probability
+            })
+        
+        # Convert results to DataFrame
+        results_df = pd.DataFrame(results)
+        
+        print(f"Cancellation probabilities for airlines at airport {airport_code}:")
+        print(results_df)
+        
+        return results_df
+    
+    except Exception as e:
+        logger.error(f"Prediction failed: {str(e)}")
+        raise
 
-# Load the model
-def load_model():
+def load_current_weather():
     """
-    Load the pre-trained model from a pickle file.
+    Load and preprocess the current weather data for Maryland.
     
     Returns:
-        model: The pre-trained model.
+        pd.DataFrame: Processed DataFrame with current weather data.
     """
-    model_path = "model.pkl"
-    with open(model_path, 'rb') as file:
-        model = pickle.load(file)
-    return model
+    current_weather_path = 'data/processed/weather_data.csv'
 
-# Make predictions using the model
-def predict_delays(df, model):
-    """
-    Predict delay probabilities using the pre-trained model.
-
-    Args:
-        df (pd.DataFrame): The DataFrame containing flight data.
-        model: The pre-trained model.
-
-    Returns:
-        pd.DataFrame: The DataFrame with added predictions.
-    """
-    # Assume the model expects features such as 'historical_on_time_performance' and 'current_conditions'
-    features = ['historical_on_time_performance', 'current_conditions']  # Adjust based on actual model features
-    X = df[features].fillna(0)  # Replace missing values with 0 or appropriate value
-    df['delay_probability'] = model.predict_proba(X)[:, 1]  # Probability of delays, adjust indexing if needed
-    return df
-
-# Static Visualizations
-def create_static_visualizations(df, airport_code):
-    """
-    Create static visualizations using Matplotlib and Seaborn.
-
-    Args:
-        df (pd.DataFrame): The DataFrame containing flight delay data.
-        airport_code (str): The 3-letter airport code to filter the data.
-    """
-    # Filter data for the selected airport
-    filtered_df = df[df['destination_airport'] == airport_code]
-
-    # Histogram of delay probabilities
-    plt.figure(figsize=(10, 6))
-    sns.histplot(filtered_df['delay_probability'], bins=30, kde=True, color='skyblue')
-    plt.title(f'Distribution of Flight Delay Probabilities to {airport_code}')
-    plt.xlabel('Delay Probability')
-    plt.ylabel('Frequency')
-    plt.savefig('data/analyzed/flight_delay_histogram.png')
-    plt.close()
-    print("Static histogram saved to data/analyzed/flight_delay_histogram.png")
-
-    # Bar chart of average delay probabilities by airline
-    plt.figure(figsize=(12, 8))
-    sns.barplot(x='airline', y='delay_probability', data=filtered_df, palette='viridis')
-    plt.title(f'Average Delay Probability by Airline to {airport_code}')
-    plt.xlabel('Airline')
-    plt.ylabel('Average Delay Probability')
-    plt.xticks(rotation=45)
-    plt.savefig('data/analyzed/average_delay_by_airline.png')
-    plt.close()
-    print("Static bar chart saved to data/analyzed/average_delay_by_airline.png")
-
-# Interactive Scatter Plot
-def create_interactive_scatter_plot(df, airport_code):
-    """
-    Create an interactive scatter plot to visualize the relationship between different factors and delay probabilities.
-
-    Args:
-        df (pd.DataFrame): The DataFrame containing flight delay data.
-        airport_code (str): The 3-letter airport code to filter the data.
+    # Load current weather data with encoding handling
+    try:
+        current_weather_data = pd.read_csv(current_weather_path, encoding='utf-8')
+    except UnicodeDecodeError:
+        current_weather_data = pd.read_csv(current_weather_path, encoding='ISO-8859-1')
     
-    Returns:
-        fig: The Plotly figure object for the scatter plot.
-    """
-    filtered_df = df[df['destination_airport'] == airport_code]
+    # Ensure relevant columns are present
+    if not {'Location', 'Temperature (°C)', 'Conditions', 'Humidity (%)', 'Wind Speed (km/h)'}.issubset(current_weather_data.columns):
+        raise ValueError("The current weather data CSV file does not contain the required columns.")
     
-    fig = px.scatter(filtered_df, x='historical_on_time_performance', y='current_conditions',
-                     color='delay_probability', size='delay_probability',
-                     hover_name='flight_id',  # Example field, adjust as necessary
-                     title=f'Impact of Historical Performance and Current Conditions on Delay Probability to {airport_code}',
-                     labels={'historical_on_time_performance': 'Historical On-Time Performance',
-                             'current_conditions': 'Current Conditions',
-                             'delay_probability': 'Delay Probability'})
+    # Preprocess weather data
+    current_weather_data.rename(columns={'Location': 'airport', 'Temperature (°C)': 'temperature', 
+                                         'Humidity (%)': 'humidity', 'Wind Speed (km/h)': 'wind_speed'}, inplace=True)
     
-    return fig
+    return current_weather_data
 
-# Create airline delay table
-def create_airline_delay_table(df, airport_code):
+
+def create_dash_dashboard(results_df, airport_code):
     """
-    Create a table of airlines and their delay percentages.
-
+    Create and run a Dash dashboard to visualize the probability of cancellation for different airlines.
+    
     Args:
-        df (pd.DataFrame): The DataFrame containing flight delay data.
-        airport_code (str): The 3-letter airport code to filter the data.
-    
-    Returns:
-        pd.DataFrame: The DataFrame containing airlines and their average delay probabilities.
+        results_df (pd.DataFrame): DataFrame containing airline cancellation probabilities with columns:
+                                   'carrier_name', 'carrier', and 'probability_of_cancellation'.
     """
-    filtered_df = df[df['destination_airport'] == airport_code]
-    airline_delay_df = filtered_df.groupby('airline')['delay_probability'].mean().reset_index()
-    airline_delay_df = airline_delay_df.sort_values(by='delay_probability', ascending=False)
-    return airline_delay_df
+    # Initialize Dash app
+    app = dash.Dash(__name__)
 
-# Interactive Dashboard
-def create_dashboard(df, airport_code):
-    """
-    Create an interactive dashboard using Dash.
-
-    Args:
-        df (pd.DataFrame): The DataFrame containing flight delay data.
-        airport_code (str): The 3-letter airport code to filter the data.
-    """
-    app = Dash(__name__)
-
-    # Create dashboard layout
+    # Layout of the app
     app.layout = html.Div([
-        html.H1(f"Flight Delay Probability Dashboard to {airport_code}"),
-        dcc.Graph(id='delay-scatter-plot'),
-        dash_table.DataTable(
-            id='airline-delay-table',
-            columns=[{"name": i, "id": i} for i in ['airline', 'delay_probability']],
-            data=create_airline_delay_table(df, airport_code).to_dict('records'),
-            style_table={'overflowX': 'auto'},
-            style_cell={'textAlign': 'left'},
-            style_header={'fontWeight': 'bold'}
+        html.H1('Airline Cancellation Probability Dashboard'),
+        html.H3(f"Data for Airport Code: {airport_code}"),
+
+        dcc.Graph(
+            id='cancellation-probability-chart',
+            figure={
+                'data': [
+                    go.Bar(
+                        x=results_df['carrier_name'],
+                        y=results_df['probability_of_cancellation'],
+                        text=results_df['probability_of_cancellation'].apply(lambda x: f'{x:.2f}'),
+                        textposition='auto',
+                        marker=dict(color='royalblue')
+                    )
+                ],
+                'layout': go.Layout(
+                    title='Probability of Cancellation for Different Airlines',
+                    xaxis={'title': 'Airline'},
+                    yaxis={'title': 'Probability of Cancellation'},
+                    template='plotly_dark'
+                )
+            }
         )
     ])
-
-    # Define callback to update visualizations
-    @app.callback(
-        dcc.Output('delay-scatter-plot', 'figure')
-    )
-    def update_scatter_plot():
-        scatter_fig = create_interactive_scatter_plot(df, airport_code)
-        return scatter_fig
 
     # Run the app
     app.run_server(debug=True)

@@ -1,3 +1,4 @@
+import os
 import pickle
 import pandas as pd
 from analysis import model as modelTrain
@@ -13,6 +14,7 @@ def evaluate_model():
 
     # Load and preprocess data
     data = modelTrain.load_and_preprocess_data()
+    output_dir = 'data/outputs'
     
     features = ['arr_flights', 'arr_del15', 'carrier_ct', 'weather_ct', 'nas_ct', 'security_ct', 'late_aircraft_ct',
                 'arr_delay', 'carrier_delay', 'weather_delay', 'nas_delay', 'security_delay', 'late_aircraft_delay',
@@ -35,10 +37,16 @@ def evaluate_model():
     # Make predictions
     y_pred = model.predict(X_test)
     
+    
     # Evaluate the model
     accuracy = accuracy_score(y_test, y_pred)
     report = classification_report(y_test, y_pred)
     
+    with open(os.path.join(output_dir, 'accuracy.txt'), 'w') as file:
+        file.write(f"Model Accuracy: {accuracy:.2f}\n")
+    
+    with open(os.path.join(output_dir, 'classification_report.txt'), 'w') as file:
+        file.write(report)
     print(f"Model Accuracy: {accuracy:.2f}")
     print("Classification Report:")
     print(report)
